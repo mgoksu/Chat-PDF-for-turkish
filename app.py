@@ -1,7 +1,6 @@
 
 from threading import Thread
 
-from dotenv import load_dotenv
 import streamlit as st
 from htmlTemplates import css, bot_template, user_template
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig, TextIteratorStreamer
@@ -112,7 +111,6 @@ def handle_question(question):
     st.session_state.chat_history.append(response)
 
 def main():
-    load_dotenv()
     st.write(css,unsafe_allow_html=True)
 
     if "index" not in st.session_state:
