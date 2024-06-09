@@ -45,7 +45,17 @@ Bu kaynaklar birbirinden bağımsız olduğundan herhangi birini alternatifiyle 
 `app.py` dosyasından retrieval, sampling parametreleri ve prompt template'ı ile oynayıp testler yapabilirsiniz. Şu anki haliyle deterministic çalışıyor.
 
 ## Test Ortamı
-Ben RTX 4060 Ti (16GB VRAM) ve 8-bit quantization ile test yapabildim. CPU ile test yapamadım.
+Ben RTX 4060 Ti (16GB VRAM) ve 8-bit quantization ile test yapabildim. CPU ile denemedim.
+
+## Test PDF dosyasından bazı Örnekler 
+**SORU:**  Bağıl değerlendirme sistemi nedir?
+**CEVAP:** Bağıl değerlendirme sistemi, öğrencilerin dönem içi çalışmaları, ara sınavları, dönem sonu sınavları ve bütünleme sınavları notlarının ağırlıklarına göre belirlenen başarı not ortalamasını, o dersi alan öğrencilerin başarı düzeyine göre belirleyen bir değerlendirme sistemidir. Bu sistem, öğrencilerin belirli bir dersteki performansını, sınıfındaki diğer öğrencilerin performanslarıyla karşılaştırır.
+
+**SORU:**  Akademik takvim ne zaman hazırlanır?
+**CEVAP:** Akademik takvim, bir önceki eğitim-öğretim yılının en geç Haziran ayı içinde Senato tarafından kararlaştırılır.
+
+**SORU:**  Dört yıllık lisans programını ne kadar zamanda bitirmeliyim?\\
+**CEVAP:** Dört yıllık lisans programını yedi yıl içinde tamamlamanız gerekmektedir.
 
 ## Teşekkür - Acknowledgements
 - Streamlit HTML ve CSS görsel şablonu: [https://github.com/ArmaanSeth/ChatPDF](https://github.com/ArmaanSeth/ChatPDF)
