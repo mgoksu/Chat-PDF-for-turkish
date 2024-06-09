@@ -1,8 +1,6 @@
 
 from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from transformers import AutoTokenizer
-from sentence_transformers import SentenceTransformer
 from faiss import IndexFlatL2, write_index, read_index
 
 def read_pdf_content(docs, joiner="\n"):
@@ -53,5 +51,5 @@ def create_faiss_index(embeddings):
     return faiss_index
 
 def semantic_search(embedding, index, top_k=5):
-    D, I = index.search(embedding.reshape(1, -1), top_k)
-    return D, I
+    dist, ind = index.search(embedding.reshape(1, -1), top_k)
+    return dist, ind

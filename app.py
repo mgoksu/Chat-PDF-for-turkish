@@ -5,6 +5,7 @@ import streamlit as st
 from htmlTemplates import css, bot_template, user_template
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig, TextIteratorStreamer
 from sentence_transformers import SentenceTransformer
+import torch
 
 from util import semantic_search, read_pdf_content, split_text, embed_text, create_faiss_index
 
@@ -15,24 +16,40 @@ CHUNK_SIZE = 300
 CHUNK_OVERLAP = 50
 EMBED_MODEL_NAME = "intfloat/e5-base-v2"
 
+# Sampling parameters
+# Deterministic generation
+SAMPLING_PARAMS = {
+    'do_sample': False,
+    'top_k': 50,
+    'top_p': None,
+    'temperature': None,
+    'repetition_penalty': 1.0
+}
+
 # LLM parameters
 LLM_MODEL_NAME = "sambanovasystems/SambaLingo-Turkish-Chat"
-TEMPLATE = (
+PROMPT_TEMPLATE = (
     "<|user|>\n"
     "Bağlam:{context}\n\nSoru:{instruction}</s>\n"
     "<|assistant|>\n"
 )
 
+# Streamlit seems to load the resources multiple times
+# So it needs to be cached to avoid running out of memory
+# https://docs.streamlit.io/develop/api-reference/caching-and-state/st.cache_resource
 @st.cache_resource
 def load_tokenizer():
     return AutoTokenizer.from_pretrained(LLM_MODEL_NAME)
 
 @st.cache_resource
 def load_model():
-    return AutoModelForCausalLM.from_pretrained(LLM_MODEL_NAME, 
-                                                device_map='auto', 
-                                                quantization_config=BNB_CONFIG,
-                                                )
+    if torch.cuda.is_available():
+        return AutoModelForCausalLM.from_pretrained(LLM_MODEL_NAME, 
+                                                    device_map='auto', 
+                                                    quantization_config=BNB_CONFIG,
+                                                    )
+    else:
+        return AutoModelForCausalLM.from_pretrained(LLM_MODEL_NAME)
 
 @st.cache_resource
 def load_streamer():
@@ -64,11 +81,11 @@ def prepare_prompt(query, embed_model, split_texts, index):
     prepended_query = "query: " + query
     query_emb = embed_model.encode(prepended_query, normalize_embeddings=True)
 
-    dist, ind = semantic_search(query_emb, index, top_k=TOP_K)
+    _, ind = semantic_search(query_emb, index, top_k=TOP_K)
 
     context = "\n".join([split_texts[i] for i in ind[0]])
 
-    prompt = TEMPLATE.format_map({'instruction': prepended_query, 'context': context})
+    prompt = PROMPT_TEMPLATE.format_map({'instruction': prepended_query, 'context': context})
 
     return context, prompt
 
@@ -80,16 +97,15 @@ def bot_template_generator_wrapper(generator):
         container.write(bot_template.replace("{{MSG}}", result),unsafe_allow_html=True)
     return result
 
-
 def handle_question(question):
-
+    # rewrite chat history so that older messages don't get lost
     for i,msg in enumerate(st.session_state.chat_history):
         if i%2==0:
             st.write(user_template.replace("{{MSG}}",msg,),unsafe_allow_html=True)
         else:
             st.write(bot_template.replace("{{MSG}}",msg),unsafe_allow_html=True)
     
-    context, prompt = prepare_prompt(question, EMBED_MODEL, st.session_state.split_texts, st.session_state.index)
+    _, prompt = prepare_prompt(question, EMBED_MODEL, st.session_state.split_texts, st.session_state.index)
     st.session_state.chat_history.append(question)
     st.write(user_template.replace("{{MSG}}",question),unsafe_allow_html=True)
     inputs = TOKENIZER(prompt, return_tensors="pt")
@@ -97,13 +113,9 @@ def handle_question(question):
 
     thread = Thread(target=MODEL.generate, kwargs=dict(inputs, 
                                                        max_new_tokens=512, 
-                                                       do_sample=False, 
-                                                       top_k=50, 
-                                                       top_p=None, 
-                                                       temperature=None, 
-                                                       pad_token_id=TOKENIZER.eos_token_id, 
+                                                       **SAMPLING_PARAMS,
                                                        streamer=STREAMER,
-                                                       repetition_penalty=1.0,
+                                                       pad_token_id=TOKENIZER.eos_token_id, 
                                                        ),
                                                        )
     thread.start()
@@ -122,26 +134,26 @@ def main():
     if "chat_history" not in st.session_state:
         st.session_state.chat_history=[]
     
-    st.header("Chat with multiple PDFs :books:")
-    question=st.text_input("Ask question from your document:")
+    st.header("Türkçe PDF dosyalarıyla sohbet")
+    question=st.text_input("Soru sor:")
     if question:
         handle_question(question)
     with st.sidebar:
-        st.subheader("Your documents")
-        docs=st.file_uploader("Upload your PDF here and click on 'Process'",accept_multiple_files=True)
-        if st.button("Process"):
-            with st.spinner("Processing"):
+        st.subheader("Dökümanlar")
+        docs=st.file_uploader("PDF dosyalarını yükleyip 'Dökümanları işle' butonuna tıklayın",accept_multiple_files=True)
+        if st.button("Dökümanları işle"):
+            with st.spinner("İşleniyor..."):
                 
-                #get the pdf
+                # load the pdf
                 raw_text = read_pdf_content(docs)
                 
-                #get the text chunks
+                # split texts
                 st.session_state.split_texts = split_text(raw_text, EMBED_TOKENIZER, chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
                 
-                #get the embeddings
+                # get the embeddings
                 embeddings = embed_text(st.session_state.split_texts, EMBED_MODEL, prepend="passage: ")
                 
-                #create the faiss index
+                # create the faiss index
                 st.session_state.index = create_faiss_index(embeddings)
 
 
