@@ -1,7 +1,9 @@
 # A RAG project to chat/query Turkish PDF docs 
-# (Türkçe PDF dosyalarıyla sohbet)
+
+https://github.com/mgoksu/Chat-PDF-for-turkish/assets/6663498/7269f03d-d995-409b-ae4c-911d49f6ee5b
 
 ## Nasıl Kullanılır
+
 1. Repoyu indirin.
    ```bash
    git clone https://github.com/mgoksu/Chat-PDF-for-turkish
