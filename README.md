@@ -54,7 +54,7 @@ Ben RTX 4060 Ti (16GB VRAM) ve 8-bit quantization ile test yapabildim. CPU ile d
 **SORU:**  Akademik takvim ne zaman hazırlanır?
 **CEVAP:** Akademik takvim, bir önceki eğitim-öğretim yılının en geç Haziran ayı içinde Senato tarafından kararlaştırılır.
 
-**SORU:**  Dört yıllık lisans programını ne kadar zamanda bitirmeliyim?\\
+**SORU:**  Dört yıllık lisans programını ne kadar zamanda bitirmeliyim?
 **CEVAP:** Dört yıllık lisans programını yedi yıl içinde tamamlamanız gerekmektedir.
 
 ## Teşekkür - Acknowledgements
