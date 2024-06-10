@@ -48,7 +48,7 @@ Bu kaynaklar birbirinden bağımsız olduğundan herhangi birini alternatifiyle 
 Ben RTX 4060 Ti (16GB VRAM) ve 8-bit quantization ile test yapabildim. CPU ile denemedim.
 
 ## Test PDF dosyasından bazı Örnekler 
-### Üniversite Yönetmeliği üzerinden denediğim birkaç örnek
+### Üniversite Yönetmeliği üzerinden sorduğum birkaç örnek ve cevapları
 **SORU:**  Bağıl değerlendirme sistemi nedir? <br/>
 **CEVAP:** Bağıl değerlendirme sistemi, öğrencilerin dönem içi çalışmaları, ara sınavları, dönem sonu sınavları ve bütünleme sınavları notlarının ağırlıklarına göre belirlenen başarı not ortalamasını, o dersi alan öğrencilerin başarı düzeyine göre belirleyen bir değerlendirme sistemidir. Bu sistem, öğrencilerin belirli bir dersteki performansını, sınıfındaki diğer öğrencilerin performanslarıyla karşılaştırır.
 
