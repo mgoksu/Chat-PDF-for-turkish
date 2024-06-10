@@ -48,13 +48,13 @@ Bu kaynaklar birbirinden bağımsız olduğundan herhangi birini alternatifiyle 
 Ben RTX 4060 Ti (16GB VRAM) ve 8-bit quantization ile test yapabildim. CPU ile denemedim.
 
 ## Test PDF dosyasından bazı Örnekler 
-**SORU:**  Bağıl değerlendirme sistemi nedir?
+**SORU:**  Bağıl değerlendirme sistemi nedir? <br/>
 **CEVAP:** Bağıl değerlendirme sistemi, öğrencilerin dönem içi çalışmaları, ara sınavları, dönem sonu sınavları ve bütünleme sınavları notlarının ağırlıklarına göre belirlenen başarı not ortalamasını, o dersi alan öğrencilerin başarı düzeyine göre belirleyen bir değerlendirme sistemidir. Bu sistem, öğrencilerin belirli bir dersteki performansını, sınıfındaki diğer öğrencilerin performanslarıyla karşılaştırır.
 
-**SORU:**  Akademik takvim ne zaman hazırlanır?
+**SORU:**  Akademik takvim ne zaman hazırlanır? <br/>
 **CEVAP:** Akademik takvim, bir önceki eğitim-öğretim yılının en geç Haziran ayı içinde Senato tarafından kararlaştırılır.
 
-**SORU:**  Dört yıllık lisans programını ne kadar zamanda bitirmeliyim?
+**SORU:**  Dört yıllık lisans programını ne kadar zamanda bitirmeliyim? <br/>
 **CEVAP:** Dört yıllık lisans programını yedi yıl içinde tamamlamanız gerekmektedir.
 
 ## Teşekkür - Acknowledgements
