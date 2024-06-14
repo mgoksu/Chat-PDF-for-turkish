@@ -23,7 +23,8 @@ SAMPLING_PARAMS = {
     'top_k': 50,
     'top_p': None,
     'temperature': None,
-    'repetition_penalty': 1.0
+    'repetition_penalty': 1.0,
+    'max_new_tokens': 1024,
 }
 
 # LLM parameters
@@ -112,7 +113,6 @@ def handle_question(question):
     inputs['input_ids'] = inputs['input_ids'].to(MODEL.device)
 
     thread = Thread(target=MODEL.generate, kwargs=dict(inputs, 
-                                                       max_new_tokens=512, 
                                                        **SAMPLING_PARAMS,
                                                        streamer=STREAMER,
                                                        pad_token_id=TOKENIZER.eos_token_id, 
