@@ -45,7 +45,7 @@ Bu kaynaklar birbirinden bağımsız olduğundan herhangi birini alternatifiyle 
 `app.py` dosyasından retrieval, sampling parametreleri ve prompt template'ı ile oynayıp testler yapabilirsiniz. Şu anki haliyle deterministic çalışıyor.
 
 ## Test Ortamı
-Ben RTX 4060 Ti (16GB VRAM) ve 8-bit quantization ile test yapabildim. CPU ile denemedim.
+Ben RTX 4060 Ti (16GB VRAM) ve 8-bit quantization ile test yapabildim. CPU ile denerken RAM doluyordu, pek test edemedim. Context kısmını azaltarak denenebilir belki.
 
 ## Test PDF dosyasından bazı Örnekler 
 ### Üniversite Yönetmeliği üzerinden sorduğum birkaç örnek ve cevapları
